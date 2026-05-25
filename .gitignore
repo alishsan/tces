@@ -1,0 +1,9 @@
+/target
+/.cpcache
+/.lein-*
+/checkouts
+*.jar
+*.class
+.DS_Store
+.clj-kondo/
+.lsp/
