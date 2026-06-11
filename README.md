@@ -1,5 +1,7 @@
 # TCES — Thermochemical Energy Storage Simulator
 
+Thermochemical resorption model for **surplus heat utilization** (including **SMR BOP** studies) and reproduction of Yan et al. (2020).
+
 Clojure implementation of the **multi-mode NiCl₂–SrCl₂/NH₃ resorption heat transformer** from:
 
 > Ting Yan, Z.H. Kuai, S.F. Wu, *Multi-mode solid–gas thermochemical resorption heat transformer using NiCl₂–SrCl₂/NH₃*, Applied Thermal Engineering **167** (2020) 114800.  
@@ -31,13 +33,26 @@ The code implements the **lumped thermodynamic balance** (Eqs. 3–19): reaction
 
 > **Note:** The 2020 paper does not publish a full Cp / ΔH table. Defaults in `tces.properties` are calibrated so **direct** and **upgrade** modes match published COPh and γh at `X = 0.85`, `μ = 8` within tolerance. **Combined** mode COPh/COPc depend on unstated charge-path details in the paper; results are reported but not used in the pass/fail gate.
 
+## SMR example (40 MWe, PWR-class steam 280–320 °C)
+
+Secondary steam is **too hot** for direct NiCl₂ charging (~168 °C). The model assumes a **steam → HTF (~175 °C) heat exchanger**, then TCES on the BOP branch.
+
+```bash
+lein run smr          # sizing & mode recommendation
+```
+
+See [docs/SMR-concept.md](docs/SMR-concept.md) and [examples/smr-40mwe-pwr.edn](examples/smr-40mwe-pwr.edn).
+
 ## Usage
 
 Requires [Leiningen](https://leiningen.org/).
 
 ```bash
-# Run default case (X=0.85, μ=8)
+# Yan (2020) benchmark (X=0.85, μ=8)
 lein run
+
+# 40 MWe SMR surplus-heat scenario
+lein run smr
 
 # Tests
 lein test
@@ -68,7 +83,12 @@ src/tces/
   modes.clj          # Qin/Qout per operating mode
   reactor.clj        # System builder & sweeps
   simulate.clj       # Validation vs. paper
-  main.clj           # CLI
+  smr.clj            # 40 MWe PWR-class BOP scenarios
+  main.clj           # CLI (lein run | lein run smr)
+docs/
+  SMR-concept.md     # Proposal narrative
+examples/
+  smr-40mwe-pwr.edn  # Editable scenario parameters
 ```
 
 ## References

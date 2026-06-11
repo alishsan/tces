@@ -1,8 +1,9 @@
 (ns tces.main
-  (:require [tces.simulate :as sim])
+  (:require [tces.simulate :as sim]
+            [tces.smr :as smr])
   (:gen-class))
 
-(defn -main [& _]
+(defn run-yan-benchmark []
   (let [{:keys [lines validation]} (sim/run-default)
         cmp (:comparison validation)]
     (println "NiCl2–SrCl2/NH3 resorption heat transformer (Yan et al. 2020)")
@@ -18,3 +19,13 @@
     (println (if (:pass? validation)
                "\nBenchmarks: PASS (direct & upgrade within tolerance)"
                "\nBenchmarks: partial — see README"))))
+
+(defn run-smr-report []
+  (println (smr/format-report-line (smr/scenario-report smr/default-40mwe-pwr)))
+  (println "Detail: docs/SMR-concept.md")
+  (println "Override scenario: examples/smr-40mwe-pwr.edn"))
+
+(defn -main [& args]
+  (if (= "smr" (first args))
+    (run-smr-report)
+    (run-yan-benchmark)))

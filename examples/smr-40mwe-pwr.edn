@@ -1,0 +1,18 @@
+;; 40 MWe PWR-class SMR — surplus heat to TCES (NiCl2–SrCl2/NH3)
+;; Steam header 280–320 °C is NOT coupled directly to the salt beds;
+;; use a ~175 °C HTF loop via steam HX (see docs/SMR-concept.md).
+
+{:name "40 MWe PWR-class SMR"
+ :electric-power-mwe 40.0
+ :thermal-efficiency 0.33
+ :steam-t-min-c 280.0
+ :steam-t-max-c 320.0
+ :steam-pressure-mpa 7.0
+ :interface-loop-t-c 175.0
+ :surplus-fraction 0.15
+ :surplus-hours 6.0
+ :delivery-t-min-c 70.0
+ :delivery-t-max-c 150.0
+ :needs-cooling? false
+ :x 0.85
+ :mu 8}
