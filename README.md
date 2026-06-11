@@ -61,23 +61,29 @@ lein test
 ### From the REPL
 
 ```clojure
-(require '[tces.reactor :as r]
-         '[tces.modes :as m])
-
-;; Single mode
-(m/mode-result :upgrade {:x 0.85 :mu 8})
+(require '[tces.core :as tces])
 
 ;; All three modes
-(r/make-system {:x 0.85 :mu 8})
+(tces/simulate {:x 0.85 :mu 8})
+
+;; Single mode
+(tces/mode-result :upgrade {:x 0.85 :mu 8})
+
+;; Yan (2020) validation
+(tces/validate)
+
+;; 40 MWe SMR report
+(tces/smr-report tces/default-40mwe-pwr)
 
 ;; Sweep conversion rate (Fig. 6)
-(r/sweep-x 8 :from 0.1 :to 1.0 :step 0.05)
+(tces/sweep-x 8 :from 0.1 :to 1.0 :step 0.05)
 ```
 
 ## Project layout
 
 ```
 src/tces/
+  core.clj           # Public API (start here)
   properties.clj   # NiCl2–SrCl2/NH3 cycle data & paper benchmarks
   thermo.clj         # Sensible/reaction heat & Clapeyron
   modes.clj          # Qin/Qout per operating mode

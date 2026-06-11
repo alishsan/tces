@@ -1,11 +1,12 @@
 (ns tces.main
-  (:require [tces.simulate :as sim]
+  (:require [tces.core :as tces]
+            [tces.simulate :as sim]
             [tces.smr :as smr])
   (:gen-class))
 
 (defn run-yan-benchmark []
   (let [{:keys [lines validation]} (sim/run-default)
-        cmp (:comparison validation)]
+        cmp (:comparison (tces/validate))]
     (println "NiCl2–SrCl2/NH3 resorption heat transformer (Yan et al. 2020)")
     (println "Thermodynamic cycle at X = 0.85, μ = 8\n")
     (doseq [line lines] (println line))
